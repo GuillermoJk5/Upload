@@ -8,12 +8,6 @@
 <body>
   <h1>Formulario de Sospechosos</h1>
 
-  <script >
-   
-   
-   </script>
-  
-
   <form id="sospechosoForm">
     <label for="nombreInput">Nombre:</label>
     <input type="text" id="nombreInput" required><br><br>
@@ -91,9 +85,23 @@
      const nuevoSospechoso = new Sospechoso(nombre,tipo,residencia,fechaDescarga,culpabilidad,imagen,comentario);
 
      console.log(nuevoSospechoso);
-    
-        // Hacer algo con el nuevoSospechoso aquí...
-      });
+
+     añadirsospechoso(nuevoSospechoso);
+ });
+
+ function añadirSospechoso(nuevoSospechoso) {
+  let listaSospechosos = [];
+
+  const listaSospechososJSON = localStorage.getItem('sospechosos');
+  if (listaSospechososJSON) {
+    listaSospechosos = JSON.parse(listaSospechososJSON);
+  }
+
+  listaSospechosos.push(nuevoSospechoso);
+
+  const nuevaListaSospechososJSON = JSON.stringify(listaSospechosos);
+  localStorage.setItem('sospechosos', nuevaListaSospechososJSON);
+}
     
   </script>
   
