@@ -8,24 +8,30 @@
 <body>
   <h1>Formulario de Sospechosos</h1>
 
+  <script >
+   
+   
+   </script>
+  
+
   <form id="sospechosoForm">
     <label for="nombreInput">Nombre:</label>
     <input type="text" id="nombreInput" required><br><br>
 
     <label>Tipo:</label>
     <div class="radio-container">
-    <input type="radio" id="tipoCargado" name="tipoSospechoso" value="Cargado" required onclick="mostrarFechaDescarga()">
+    <input type="radio" id="tipoCargado" name="tipoSospechoso" value="Cargado" required >
     <label for="tipoCargado">Cargado</label>
 
-    <input type="radio" id="tipoVivo" name="tipoSospechoso" value="Vivo" required onclick="ocultarFechaDescarga()">
+    <input type="radio" id="tipoVivo" name="tipoSospechoso" value="Vivo" required >
     <label for="tipoVivo">Vivo</label>
     </div><br>
 
     <label for="residenciaInput">Residencia:</label>
-    <input type="text" id="residenciaInput" required><br><br>
+    <input type="text" id="residenciaInput" required><br>
 
     <label for="fechaDescargaInput" id="fechaDescargaLabel" style="display: none;">Fecha de Descarga:</label>
-    <input type="date" id="fechaDescargaInput" style="display: none;" required><br><br>
+    <input type="date" id="fechaDescargaInput" style="display: none;" ><br>
 
 
     <label for="culpabilidadInput">Culpabilidad:</label>
@@ -44,26 +50,30 @@
 
     <input type="submit" value="Crear Sospechoso">
   </form>
-
   <script type="module" >
- 
- import Sospechoso from '../Modelos/Sospechoso.js';
 
-    function mostrarFechaDescarga() {
-      const fechaDescargaLabel = document.getElementById('fechaDescargaLabel');
-      const fechaDescargaInput = document.getElementById('fechaDescargaInput');
+    import { Sospechoso } from '../Modelos/Sospechoso.js';
 
-      fechaDescargaLabel.style.display = 'block';
-      fechaDescargaInput.style.display = 'block';
-    }
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('tipoCargado').addEventListener('click', mostrarFechaDescarga);
+      document.getElementById('tipoVivo').addEventListener('click', ocultarFechaDescarga);
 
-    function ocultarFechaDescarga() {
-      const fechaDescargaLabel = document.getElementById('fechaDescargaLabel');
-      const fechaDescargaInput = document.getElementById('fechaDescargaInput');
-
-      fechaDescargaLabel.style.display = 'none';
-      fechaDescargaInput.style.display = 'none';
-    }
+    });
+       function mostrarFechaDescarga() {
+         const fechaDescargaLabel = document.getElementById('fechaDescargaLabel');
+         const fechaDescargaInput = document.getElementById('fechaDescargaInput');
+   
+         fechaDescargaLabel.style.display = 'block';
+         fechaDescargaInput.style.display = 'block';
+       }
+   
+       function ocultarFechaDescarga() {
+         const fechaDescargaLabel = document.getElementById('fechaDescargaLabel');
+         const fechaDescargaInput = document.getElementById('fechaDescargaInput');
+   
+         fechaDescargaLabel.style.display = 'none';
+         fechaDescargaInput.style.display = 'none';
+       }
 
     document.getElementById('sospechosoForm').addEventListener('submit', function(event) {
      event.preventDefault();
@@ -86,6 +96,7 @@
       });
     
   </script>
+  
 </body>
 </html>
 

@@ -1,5 +1,5 @@
 
-class Sospechoso {
+export class Sospechoso {
     constructor(nombre, tipo, residencia,fechadescarga, culpabilidad, imagen, comentario) {
       this.nombre = nombre;
       this.tipo = tipo;
