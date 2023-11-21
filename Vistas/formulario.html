@@ -1,11 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario de Sospechosos</title>
+  <meta charset="UTF-8">
+  <title>Formulario de Sospechoso</title>
+  <link rel="stylesheet" href="../Estilos/formulario.css">
 </head>
 <body>
-    
+  <h1>Formulario de Sospechoso</h1>
+
+  <form id="sospechosoForm">
+    <label for="nombreInput">Nombre:</label>
+    <input type="text" id="nombreInput" required><br><br>
+
+    <label for="tipoInput">Tipo:</label>
+    <select id="tipoInput" required>
+      <option value="" disabled selected>Seleccione un tipo</option>
+      <option value="Cargado">Cargado</option>
+      <option value="Vivo">Vivo</option>
+    </select><br><br>
+
+    <label for="residenciaInput">Residencia:</label>
+    <input type="text" id="residenciaInput" required><br><br>
+
+    <label for="fechaDescargaInput">Fecha de Descarga:</label>
+    <input type="text" id="fechaDescargaInput" required><br><br>
+
+    <label for="culpabilidadInput">Culpabilidad:</label>
+    <select id="culpabilidadInput" required>
+      <option value="" disabled selected>Seleccione una culpabilidad</option>
+      <option value="Posible cooperador">Posible cooperador</option>
+      <option value="Cooperador">Cooperador</option>
+      <option value="Delincuente">Delincuente</option>
+    </select><br><br>
+
+    <label for="imagenInput">URL Imagen:</label>
+    <input type="text" id="imagenInput" required><br><br>
+
+    <label for="comentarioInput">Comentario:</label>
+    <textarea id="comentarioInput" rows="6" cols="50" style="resize: none;" required></textarea><br><br>
+
+    <input type="submit" value="Crear Sospechoso">
+  </form>
+
+  <script type="module" src="../Modelos/Sospechoso.js">
+    document.getElementById('sospechosoForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const nombre = document.getElementById('nombreInput').value;
+    const tipo = document.getElementById('tipoInput').value;
+    const residencia = document.getElementById('residenciaInput').value;
+    const fechaDescarga = document.getElementById('fechaDescargaInput').value;
+    const culpabilidad = document.getElementById('culpabilidadInput').value;
+    const imagen = document.getElementById('imagenInput').value;
+    const comentario = document.getElementById('comentarioInput').value;
+
+    const nuevoSospechoso = new Sospechoso(nombre, tipo, residencia, fechaDescarga, culpabilidad, imagen, comentario);
+
+  });
+  </script>
 </body>
 </html>
+
