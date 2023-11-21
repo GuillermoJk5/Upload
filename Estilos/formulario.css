@@ -9,7 +9,34 @@ body {
     text-align: center;
     color: #333;
   }
+  .radio-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
+  .radio-container label {
+    margin: 0 10px;
+    display: inline-block;
+    width: 40px; /* Ancho fijo para los botones */
+    height: 40px; /* Alto fijo para los botones */
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    text-align: center;
+    line-height: 40px; /* Centrar el contenido verticalmente */
+    cursor: pointer;
+    font-size: 12px; /* Tamaño de la fuente */
+  }
+
+  .radio-container input[type="radio"] {
+    display: none;
+  }
+
+  .radio-container input[type="radio"]:checked + label {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+  }
   form {
     max-width: 500px;
     margin: 0 auto;

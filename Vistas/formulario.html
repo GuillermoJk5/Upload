@@ -6,24 +6,27 @@
   <link rel="stylesheet" href="../Estilos/formulario.css">
 </head>
 <body>
-  <h1>Formulario de Sospechoso</h1>
+  <h1>Formulario de Sospechosos</h1>
 
   <form id="sospechosoForm">
     <label for="nombreInput">Nombre:</label>
     <input type="text" id="nombreInput" required><br><br>
 
-    <label for="tipoInput">Tipo:</label>
-    <select id="tipoInput" required>
-      <option value="" disabled selected>Seleccione un tipo</option>
-      <option value="Cargado">Cargado</option>
-      <option value="Vivo">Vivo</option>
-    </select><br><br>
+    <label>Tipo:</label>
+    <div class="radio-container">
+    <input type="radio" id="tipoCargado" name="tipoSospechoso" value="Cargado" required onclick="mostrarFechaDescarga()">
+    <label for="tipoCargado">Cargado</label>
+
+    <input type="radio" id="tipoVivo" name="tipoSospechoso" value="Vivo" required onclick="ocultarFechaDescarga()">
+    <label for="tipoVivo">Vivo</label>
+    </div><br>
 
     <label for="residenciaInput">Residencia:</label>
     <input type="text" id="residenciaInput" required><br><br>
 
-    <label for="fechaDescargaInput">Fecha de Descarga:</label>
-    <input type="text" id="fechaDescargaInput" required><br><br>
+    <label for="fechaDescargaInput" id="fechaDescargaLabel" style="display: none;">Fecha de Descarga:</label>
+    <input type="date" id="fechaDescargaInput" style="display: none;" required><br><br>
+
 
     <label for="culpabilidadInput">Culpabilidad:</label>
     <select id="culpabilidadInput" required>
@@ -42,21 +45,46 @@
     <input type="submit" value="Crear Sospechoso">
   </form>
 
-  <script type="module" src="../Modelos/Sospechoso.js">
+  <script type="module" >
+ 
+ import Sospechoso from '../Modelos/Sospechoso.js';
+
+    function mostrarFechaDescarga() {
+      const fechaDescargaLabel = document.getElementById('fechaDescargaLabel');
+      const fechaDescargaInput = document.getElementById('fechaDescargaInput');
+
+      fechaDescargaLabel.style.display = 'block';
+      fechaDescargaInput.style.display = 'block';
+    }
+
+    function ocultarFechaDescarga() {
+      const fechaDescargaLabel = document.getElementById('fechaDescargaLabel');
+      const fechaDescargaInput = document.getElementById('fechaDescargaInput');
+
+      fechaDescargaLabel.style.display = 'none';
+      fechaDescargaInput.style.display = 'none';
+    }
+
     document.getElementById('sospechosoForm').addEventListener('submit', function(event) {
-    event.preventDefault();
+     event.preventDefault();
 
-    const nombre = document.getElementById('nombreInput').value;
-    const tipo = document.getElementById('tipoInput').value;
-    const residencia = document.getElementById('residenciaInput').value;
-    const fechaDescarga = document.getElementById('fechaDescargaInput').value;
-    const culpabilidad = document.getElementById('culpabilidadInput').value;
-    const imagen = document.getElementById('imagenInput').value;
-    const comentario = document.getElementById('comentarioInput').value;
+     const nombre = document.getElementById('nombreInput').value;
+     const tipoCargadoChecked = document.getElementById('tipoCargado').checked;
+     const residencia = document.getElementById('residenciaInput').value;
+     const fechaDescarga = tipoCargadoChecked ? document.getElementById('fechaDescargaInput').value : '';
+     const culpabilidad = document.getElementById('culpabilidadInput').value;
+     const imagen = document.getElementById('imagenInput').value;
+     const comentario = document.getElementById('comentarioInput').value;
 
-    const nuevoSospechoso = new Sospechoso(nombre, tipo, residencia, fechaDescarga, culpabilidad, imagen, comentario);
+     let tipo = tipoCargadoChecked ? 'Cargado' : 'Vivo';
 
-  });
+     const nuevoSospechoso = new Sospechoso(nombre,tipo,residencia,fechaDescarga,culpabilidad,imagen,comentario);
+
+     console.log(nuevoSospechoso);
+    
+        // Hacer algo con el nuevoSospechoso aquí...
+      });
+    
   </script>
 </body>
 </html>
