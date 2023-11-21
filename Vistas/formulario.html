@@ -69,27 +69,25 @@
          fechaDescargaInput.style.display = 'none';
        }
 
-    document.getElementById('sospechosoForm').addEventListener('submit', function(event) {
-     event.preventDefault();
+  function validarFechaCampo(fecha) {
 
-     const nombre = document.getElementById('nombreInput').value;
-     const tipoCargadoChecked = document.getElementById('tipoCargado').checked;
-     const residencia = document.getElementById('residenciaInput').value;
-     const fechaDescarga = tipoCargadoChecked ? document.getElementById('fechaDescargaInput').value : '';
-     const culpabilidad = document.getElementById('culpabilidadInput').value;
-     const imagen = document.getElementById('imagenInput').value;
-     const comentario = document.getElementById('comentarioInput').value;
+    if (!fecha||fecha === '') {
+    return true;
+  }else{
+    
+  const fechaCampo = new Date(document.getElementById(fecha).value);
+  const fechaActual = new Date();
 
-     let tipo = tipoCargadoChecked ? 'Cargado' : 'Vivo';
+  if (fechaCampo > fechaActual) {
+    return false;
+  } else {
+    return true;
+  }
+}
 
-     const nuevoSospechoso = new Sospechoso(nombre,tipo,residencia,fechaDescarga,culpabilidad,imagen,comentario);
-
-     console.log(nuevoSospechoso);
-
-     añadirsospechoso(nuevoSospechoso);
- });
-
- function añadirSospechoso(nuevoSospechoso) {
+}
+       
+function anadirSospechoso(nuevoSospechoso) {
   let listaSospechosos = [];
 
   const listaSospechososJSON = localStorage.getItem('sospechosos');
@@ -102,6 +100,47 @@
   const nuevaListaSospechososJSON = JSON.stringify(listaSospechosos);
   localStorage.setItem('sospechosos', nuevaListaSospechososJSON);
 }
+
+function limpiarcampos(){
+
+  document.getElementById('nombreInput').value = '';
+  document.getElementById('tipoCargado').checked = false;
+  document.getElementById('tipoVivo').checked = false;
+  document.getElementById('residenciaInput').value = '';
+  document.getElementById('fechaDescargaInput').value = '';
+  document.getElementById('culpabilidadInput').selectedIndex = 0;
+  document.getElementById('imagenInput').value = '';
+  document.getElementById('comentarioInput').value = '';
+}
+
+document.getElementById('sospechosoForm').addEventListener('submit', function(event) {
+event.preventDefault();
+
+const fechaDescarga =  document.getElementById('fechaDescargaInput').value ;
+
+if(validarFechaCampo()){
+
+     const nombre = document.getElementById('nombreInput').value;
+     const tipoCargadoChecked = document.getElementById('tipoCargado').checked;
+     const residencia = document.getElementById('residenciaInput').value;
+     const culpabilidad = document.getElementById('culpabilidadInput').value;
+     const imagen = document.getElementById('imagenInput').value;
+     const comentario = document.getElementById('comentarioInput').value;
+
+     let tipo = tipoCargadoChecked ? 'Cargado' : 'Vivo';
+
+     const nuevoSospechoso = new Sospechoso(nombre,tipo,residencia,fechaDescarga,culpabilidad,imagen,comentario);
+
+     console.log(nuevoSospechoso);
+
+     anadirSospechoso(nuevoSospechoso);
+     limpiarcampos();
+
+}else{
+    alert("Error en la fecha");
+}
+   
+ }); 
     
   </script>
   
