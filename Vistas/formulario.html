@@ -4,8 +4,13 @@
   <meta charset="UTF-8">
   <title>Formulario de Sospechoso</title>
   <link rel="stylesheet" href="../Estilos/formulario.css">
+  <link rel="stylesheet" href="../Estilos/principal.css">
 </head>
 <body>
+  <header>
+    <button class="alert" id="mostrarImagen">Alert</button>
+  </header>
+  
   <h1>Formulario de Sospechosos</h1>
 
   <form id="sospechosoForm">
@@ -44,6 +49,10 @@
 
     <input type="submit" value="Crear Sospechoso">
   </form>
+  <div class="fullscreen" id="imagenFullscreen">
+    <img class='imggrande' src="https://www.es.kayak.com/rimg/himg/e8/ab/bc/hotelsdotcom-703824352-6f2b45f3_w-054994.jpg?width=1366&height=768&xhint=1000&yhint=720&crop=true" alt="Imagen a pantalla completa">
+  </div>
+
   <script type="module" >
 
     import { Sospechoso } from '../Modelos/Sospechoso.js';
@@ -113,10 +122,10 @@ function limpiarcampos(){
   document.getElementById('comentarioInput').value = '';
 }
 
-document.getElementById('sospechosoForm').addEventListener('submit', function(event) {
-event.preventDefault();
+  document.getElementById('sospechosoForm').addEventListener('submit', function(event) {
+  event.preventDefault();
 
-const fechaDescarga =  document.getElementById('fechaDescargaInput').value ;
+  const fechaDescarga =  document.getElementById('fechaDescargaInput').value ;
 
 if(validarFechaCampo()){
 
@@ -143,6 +152,7 @@ if(validarFechaCampo()){
  }); 
     
   </script>
+  <script src="../Controladores/principal.js"></script>
   
 </body>
 </html>
