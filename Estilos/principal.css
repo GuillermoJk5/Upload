@@ -23,18 +23,56 @@ header {
   cursor: pointer;
 }
 
+.divpersonal{
+  width: 60%;
+  border: 3px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+}
+
+.nombrecito{
+margin-left: 90px;
+font-size: 24px;
+font-family:Impact, 'Haettenschweiler', 'Arial Narrow Bold', sans-serif;
+color: red;
+}
+
 .sujeto-imagen {
-  width: 100px;
+  width: 80px;
   height: auto; 
-  border-radius: 50%; 
-  
+  margin: 5px;
 }
 
 .divgrande{
   display: flex;
   flex-direction: column;
   text-align: center;
+  align-items: center;
 }
+
+/*Estilos cambiantes*/
+
+.cargado{
+  border: 3px solid rgb(55, 192, 55);
+}
+.Vivo{
+  border: 3px solid rgb(201, 13, 13);
+}
+
+.Delincuente{
+  color: rgb(201, 13, 13);
+}
+
+.Cooperador{
+  color: rgb(201, 182, 13);
+}
+
+.Posible_cooperador{
+  color: rgb(9, 163, 17);
+}
+
 
   /* Estilos para la imagen a pantalla completa */
   .fullscreen {
