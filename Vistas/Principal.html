@@ -35,6 +35,7 @@
     div.classList.add('divpersonal')
     var imagen = document.createElement("img");
     imagen.src = sujeto._imagen;
+    imagen.addEventListener("error",()=>imagen.src = "https://i.pinimg.com/736x/10/12/a1/1012a1ec3b393c5fea27990979e6bd01.jpg");
     imagen.classList.add('sujeto-imagen');
     imagen.classList.add(sujeto._tipo);
     div.appendChild(imagen);
