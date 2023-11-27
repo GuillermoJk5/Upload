@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Formulario de Sospechoso</title>
+  <link rel="stylesheet" href="../Estilos/formulario.css">
+  <link rel="stylesheet" href="../Estilos/estilos.css">
+</head>
+<body>
+  <header>
+    <button class="alert" id="mostrarImagen">Alert</button>
+  </header>
+
+  <script src="../Modelos/Sospechoso.js"></script>
+  <script src="../Controladores/funciones.js"></script>
+ 
+
+  <h1>Sospechoso</h1>
+  <button onclick="ira('Principal.html')">Volver</button>
+  
+  <form id="sospechosoinfo">
+  
+  <img id="img" src="" alt="">
+  <h2 id="nombre"></h2>
+  <label id="comentario"></label>
+  <label id="culpabilidad"></label>
+  <label id="fecha"></label>
+  <label id="tipo"></label>
+  <label id="residencia"></label>
+  </form>
+  <script>
+
+    document.addEventListener('DOMContentLoaded',function(){
+   
+const urlParams = new URLSearchParams(window.location.search);
+const sujetoJSON = urlParams.get('sujeto');
+const sujeto = JSON.parse(decodeURIComponent(sujetoJSON));
+
+const img = document.getElementById("img");
+const culpa = document.getElementById("culpabilidad");
+const fecha = document.getElementById("fecha");
+const tipo = document.getElementById("tipo");
+const nombre = document.getElementById("nombre");
+const residencia = document.getElementById("residencia");
+const comen = document.getElementById("comentario");
+
+console.log(sujeto);
+console.log(sujeto._nombre)
+img.src = sujeto._imagen;
+culpa.innerHTML = sujeto._culpabilidad;
+fecha.innerHTML = sujeto._fechadescarga;
+tipo.innerHTML = sujeto._tipo;
+residencia.innerHTML = sujeto._residencia;
+comen.innerHTML = sujeto._comentario;
+nombre.innerHTML = sujeto._nombre;
+});
+
+
+  </script>
+ <div class="fullscreen" id="imagenFullscreen">
+    <img class='imggrande' src="https://www.es.kayak.com/rimg/himg/e8/ab/bc/hotelsdotcom-703824352-6f2b45f3_w-054994.jpg?width=1366&height=768&xhint=1000&yhint=720&crop=true" alt="Imagen a pantalla completa">
+  </div>
+  
+  <script src="../Controladores/principal.js"></script>
+</body>
+</html>
