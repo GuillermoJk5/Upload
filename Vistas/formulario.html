@@ -12,26 +12,26 @@
   </header>
   
   <h1>Formulario de Sospechosos</h1>
-
+  <button onclick="ira('Principal.html')">Volver</button>
+  
   <form id="sospechosoForm">
     <label for="nombreInput">Nombre:</label>
     <input type="text" id="nombreInput" required><br><br>
 
     <label>Tipo:</label>
     <div class="radio-container">
-    <input type="radio" id="tipoCargado" name="tipoSospechoso" value="Cargado" required >
-    <label for="tipoCargado">Cargado</label>
+      <input type="radio" id="tipoCargado" name="tipoSospechoso" value="Cargado" required>
+      <label for="tipoCargado">Cargado</label>
 
-    <input type="radio" id="tipoVivo" name="tipoSospechoso" value="Vivo" required >
-    <label for="tipoVivo">Vivo</label>
+      <input type="radio" id="tipoVivo" name="tipoSospechoso" value="Vivo" required>
+      <label for="tipoVivo">Vivo</label>
     </div><br>
 
     <label for="residenciaInput">Residencia:</label>
     <input type="text" id="residenciaInput" required><br>
 
     <label for="fechaDescargaInput" id="fechaDescargaLabel" style="display: none;">Fecha de Descarga:</label>
-    <input type="date" id="fechaDescargaInput" style="display: none;" ><br>
-
+    <input type="date" id="fechaDescargaInput" style="display: none;"><br>
 
     <label for="culpabilidadInput">Culpabilidad:</label>
     <select id="culpabilidadInput" required>
@@ -49,111 +49,105 @@
 
     <input type="submit" value="Crear Sospechoso">
   </form>
+  
   <div class="fullscreen" id="imagenFullscreen">
     <img class='imggrande' src="https://www.es.kayak.com/rimg/himg/e8/ab/bc/hotelsdotcom-703824352-6f2b45f3_w-054994.jpg?width=1366&height=768&xhint=1000&yhint=720&crop=true" alt="Imagen a pantalla completa">
   </div>
 
-  <script type="module" >
-
-    import { Sospechoso } from '../Modelos/Sospechoso.js';
-
+  <script src="../Modelos/Sospechoso.js"></script>
+  <script src="../Controladores/funciones.js"></script>
+  <script>
+    
     document.addEventListener('DOMContentLoaded', function() {
       document.getElementById('tipoCargado').addEventListener('click', mostrarFechaDescarga);
       document.getElementById('tipoVivo').addEventListener('click', ocultarFechaDescarga);
-
     });
-       function mostrarFechaDescarga() {
-         const fechaDescargaLabel = document.getElementById('fechaDescargaLabel');
-         const fechaDescargaInput = document.getElementById('fechaDescargaInput');
+
+    function mostrarFechaDescarga() {
+      const fechaDescargaLabel = document.getElementById('fechaDescargaLabel');
+      const fechaDescargaInput = document.getElementById('fechaDescargaInput');
    
-         fechaDescargaLabel.style.display = 'block';
-         fechaDescargaInput.style.display = 'block';
-       }
+      fechaDescargaLabel.style.display = 'block';
+      fechaDescargaInput.style.display = 'block';
+    }
    
-       function ocultarFechaDescarga() {
-         const fechaDescargaLabel = document.getElementById('fechaDescargaLabel');
-         const fechaDescargaInput = document.getElementById('fechaDescargaInput');
+    function ocultarFechaDescarga() {
+      const fechaDescargaLabel = document.getElementById('fechaDescargaLabel');
+      const fechaDescargaInput = document.getElementById('fechaDescargaInput');
    
-         fechaDescargaLabel.style.display = 'none';
-         fechaDescargaInput.style.display = 'none';
-       }
+      fechaDescargaLabel.style.display = 'none';
+      fechaDescargaInput.style.display = 'none';
+    }
 
-  function validarFechaCampo(fecha) {
+    document.getElementById('sospechosoForm').addEventListener('submit', function(event) {
+      event.preventDefault();
 
-    if (!fecha||fecha === '') {
-    return true;
-  }else{
-    
-  const fechaCampo = new Date(document.getElementById(fecha).value);
-  const fechaActual = new Date();
+      const fechaDescarga = document.getElementById('fechaDescargaInput').value;
 
-  if (fechaCampo > fechaActual) {
-    return false;
-  } else {
-    return true;
-  }
-}
+      if (validarFechaCampo()) {
+        const nombre = document.getElementById('nombreInput').value;
+        const tipoCargadoChecked = document.getElementById('tipoCargado').checked;
+        const residencia = document.getElementById('residenciaInput').value;
+        const culpabilidad = document.getElementById('culpabilidadInput').value;
+        const imagen = document.getElementById('imagenInput').value;
+        const comentario = document.getElementById('comentarioInput').value;
 
-}
-       
-function anadirSospechoso(nuevoSospechoso) {
-  let listaSospechosos = [];
+        let tipo = tipoCargadoChecked ? 'Cargado' : 'Vivo';
 
-  const listaSospechososJSON = localStorage.getItem('sospechosos');
-  if (listaSospechososJSON) {
-    listaSospechosos = JSON.parse(listaSospechososJSON);
-  }
+        const nuevoSospechoso = new Sospechoso(nombre, tipo, residencia, fechaDescarga, culpabilidad, imagen, comentario);
 
-  listaSospechosos.push(nuevoSospechoso);
+        anadirSospechoso(nuevoSospechoso);
+        limpiarCampos();
+      } else {
+        alert("Error en la fecha");
+      }
+    });
 
-  const nuevaListaSospechososJSON = JSON.stringify(listaSospechosos);
-  localStorage.setItem('sospechosos', nuevaListaSospechososJSON);
-}
+    function validarFechaCampo() {
+      const fecha = 'fechaDescargaInput';
 
-function limpiarcampos(){
+      if (!fecha || fecha === '') {
+        return true;
+      } else {
+        const fechaCampo = new Date(document.getElementById(fecha).value);
+        const fechaActual = new Date();
 
-  document.getElementById('nombreInput').value = '';
-  document.getElementById('tipoCargado').checked = false;
-  document.getElementById('tipoVivo').checked = false;
-  document.getElementById('residenciaInput').value = '';
-  document.getElementById('fechaDescargaInput').value = '';
-  document.getElementById('culpabilidadInput').selectedIndex = 0;
-  document.getElementById('imagenInput').value = '';
-  document.getElementById('comentarioInput').value = '';
-}
+        if (fechaCampo > fechaActual) {
+          return false;
+        } else {
+          return true;
+        }
+      }
+    }
 
-  document.getElementById('sospechosoForm').addEventListener('submit', function(event) {
-  event.preventDefault();
+    function anadirSospechoso(nuevoSospechoso) {
+      let listaSospechosos = [];
 
-  const fechaDescarga =  document.getElementById('fechaDescargaInput').value ;
+      const listaSospechososJSON = localStorage.getItem('sospechosos');
+      if (listaSospechososJSON) {
+        listaSospechosos = JSON.parse(listaSospechososJSON);
+      }
 
-if(validarFechaCampo()){
+      listaSospechosos.push(nuevoSospechoso);
+      console.log(listaSospechosos);
 
-     const nombre = document.getElementById('nombreInput').value;
-     const tipoCargadoChecked = document.getElementById('tipoCargado').checked;
-     const residencia = document.getElementById('residenciaInput').value;
-     const culpabilidad = document.getElementById('culpabilidadInput').value;
-     const imagen = document.getElementById('imagenInput').value;
-     const comentario = document.getElementById('comentarioInput').value;
+      const nuevaListaSospechososJSON = JSON.stringify(listaSospechosos);
+      localStorage.setItem('sospechosos', nuevaListaSospechososJSON);
+    }
 
-     let tipo = tipoCargadoChecked ? 'Cargado' : 'Vivo';
-
-     const nuevoSospechoso = new Sospechoso(nombre,tipo,residencia,fechaDescarga,culpabilidad,imagen,comentario);
-
-     console.log(nuevoSospechoso);
-
-     anadirSospechoso(nuevoSospechoso);
-     limpiarcampos();
-
-}else{
-    alert("Error en la fecha");
-}
-   
- }); 
-    
+    function limpiarCampos() {
+      document.getElementById('nombreInput').value = '';
+      document.getElementById('tipoCargado').checked = false;
+      document.getElementById('tipoVivo').checked = false;
+      document.getElementById('residenciaInput').value = '';
+      document.getElementById('fechaDescargaInput').value = '';
+      document.getElementById('culpabilidadInput').selectedIndex = 0;
+      document.getElementById('imagenInput').value = '';
+      document.getElementById('comentarioInput').value = '';
+    }
   </script>
   <script src="../Controladores/principal.js"></script>
-  
 </body>
 </html>
+
 

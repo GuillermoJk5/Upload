@@ -2,24 +2,44 @@
 <html>
 <head>
   <title>LakeView Investigator</title>
-  <link rel="stylesheet" type="text/css" href="styles.css">
-  
   <link rel="stylesheet" href="../Estilos/principal.css"> 
   <meta charset="UTF-8">
-  </head>
-  <body>
-      <header>
-        <button class="alert" id="mostrarImagen">Alert</button>
-      </header>
-      
-<button onclick="ira('formulario.html')">Añadir Sospechoso</button>
- 
-  <!-- Contenedor de la imagen a pantalla completa -->
-  <div class="fullscreen" id="imagenFullscreen">
-    <img class='imggrande' src="https://www.es.kayak.com/rimg/himg/e8/ab/bc/hotelsdotcom-703824352-6f2b45f3_w-054994.jpg?width=1366&height=768&xhint=1000&yhint=720&crop=true" alt="Imagen a pantalla completa">
-  </div>
-  <script src="../Controladores/funciones.js"></script>
-  <script src="../Controladores/principal.js"></script>
-
+</head>
+<body>
+  <header>
+    <button class="alert" id="mostrarImagen">Alert</button>
+  </header>
+  <main>
+    <div class="fullscreen" id="imagenFullscreen">
+      <img class='imggrande' src="https://www.es.kayak.com/rimg/himg/e8/ab/bc/hotelsdotcom-703824352-6f2b45f3_w-054994.jpg?width=1366&height=768&xhint=1000&yhint=720&crop=true" alt="Imagen a pantalla completa">
+    </div>
+    <script src="../Controladores/funciones.js"></script>
+    <script src="../Controladores/principal.js"></script>
+    <div id="listado" class="divgrande"></div>
+    <button onclick="ira('formulario.html')" class="bottonañadir">Añadir Sospechoso</button>
+  </main>
 </body>
+<script src="../Modelos/Sospechoso.js"></script>
+<script>
+  let listaSospechosos=[];
+  const listaSospechososJSON = localStorage.getItem('sospechosos');
+  if (listaSospechososJSON) {
+    listaSospechosos = JSON.parse(listaSospechososJSON);
+  }
+  console.log(listaSospechosos);
+
+  listadoContainer = document.getElementById("listado");
+  listaSospechosos.forEach(sujeto => {
+    console.log(sujeto);
+    const div = document.createElement("div");
+    var imagenElement = document.createElement("img");
+    imagenElement.src = sujeto._imagen;
+    imagenElement.classList.add('sujeto-imagen');
+    div.appendChild(imagenElement);
+    var nombreElement = document.createElement("span");
+    nombreElement.textContent = sujeto._nombre;
+    div.appendChild(nombreElement);
+    listadoContainer.appendChild(div);
+  });
+</script>
 </html>
