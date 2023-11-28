@@ -50,7 +50,7 @@
     div.appendChild(nombre);
     div.addEventListener('click', function() {
       const sujetoJSON = JSON.stringify(sujeto);
-      window.location.href = `objetolista.html?sujeto=${encodeURIComponent(sujetoJSON)}`;
+      window.location.href = `formulario.html?sujeto=${encodeURIComponent(sujetoJSON)}`;
   });
     listadoContainer.appendChild(div);
   });

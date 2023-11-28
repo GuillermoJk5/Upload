@@ -58,7 +58,6 @@
   <script src="../Modelos/Sospechoso.js"></script>
   <script src="../Controladores/funciones.js"></script>
   <script>
-    
     document.addEventListener('DOMContentLoaded', function() {
       document.getElementById('tipoCargado').addEventListener('click', mostrarFechaDescarga);
       document.getElementById('tipoVivo').addEventListener('click', ocultarFechaDescarga);
@@ -120,16 +119,16 @@
         alert("Error en la fecha");
       }
     });
-
+  
     function validarFechaCampo() {
       const fecha = 'fechaDescargaInput';
-
+  
       if (!fecha || fecha === '') {
         return true;
       } else {
         const fechaCampo = new Date(document.getElementById(fecha).value);
         const fechaActual = new Date();
-
+  
         if (fechaCampo > fechaActual) {
           return false;
         } else {
@@ -137,10 +136,10 @@
         }
       }
     }
-
+  
     function anadirSospechoso(nuevoSospechoso) {
       let listaSospechosos = [];
-
+  
       const listaSospechososJSON = localStorage.getItem('sospechosos');
       if (listaSospechososJSON) {
         listaSospechosos = JSON.parse(listaSospechososJSON);
