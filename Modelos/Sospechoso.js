@@ -10,16 +10,14 @@ class Sospechoso {
       this.comentario = comentario;
     }
 
-
-get id(){
-  return this._id;
-}
-
 // Getters
 get nombre() {
     return this._nombre;
   }
 
+get id(){
+  return this._id;
+}
   get tipo() {
     return this._tipo;
   }

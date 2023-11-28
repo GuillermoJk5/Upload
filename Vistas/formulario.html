@@ -112,7 +112,7 @@
         let tipo = tipoCargadoChecked ? 'Cargado' : 'Vivo';
   
         const nuevoSospechoso = new Sospechoso(id, nombre, tipo, residencia, fechaDescarga, culpabilidad, imagen, comentario);
-  
+        console.log(nuevoSospechoso);
         anadirSospechoso(nuevoSospechoso);
         limpiarCampos();
       } else {
@@ -153,7 +153,7 @@
         });
       } else {
         listaSospechosos.push(nuevoSospechoso);
-        console.log("La puta lista"+listaSospechosos);
+        console.log(nuevoSospechoso);
       }
   
       const nuevaListaSospechososJSON = JSON.stringify(listaSospechosos);
