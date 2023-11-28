@@ -48,7 +48,7 @@
     <label for="comentarioInput">Comentario:</label>
     <textarea id="comentarioInput" rows="6" cols="50" style="resize: none;" required></textarea><br><br>
 
-    <input type="submit" value="Crear Sospechoso">
+    <input type="submit" value="Guardar Sospechoso">
   </form>
   
   <div class="fullscreen" id="imagenFullscreen">
@@ -66,7 +66,7 @@
     const urlParams = new URLSearchParams(window.location.search);
     const sujetoJSON = urlParams.get('sujeto');
     const sujeto = JSON.parse(decodeURIComponent(sujetoJSON));
-
+console.log(sujeto);
     if(sujeto!=null){
   
     document.getElementById('id').value = sujeto._id;
@@ -152,6 +152,12 @@
           }
         });
       } else {
+
+        numero = listaSospechosos.length;
+        console.log(listaSospechosos);
+        console.log(numero);
+        nuevoSospechoso._id = numero +1;
+
         listaSospechosos.push(nuevoSospechoso);
         console.log(nuevoSospechoso);
       }
@@ -176,7 +182,7 @@
       document.getElementById('culpabilidadInput').selectedIndex = 0;
       document.getElementById('imagenInput').value = '';
       document.getElementById('comentarioInput').value = '';
-      ira("Principal.html");
+      // ira("Principal.html");
     }
   
   </script>
