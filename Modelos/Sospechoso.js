@@ -1,5 +1,6 @@
 class Sospechoso {
-    constructor(nombre, tipo, residencia,fechadescarga, culpabilidad, imagen, comentario) {
+    constructor(id,nombre, tipo, residencia,fechadescarga, culpabilidad, imagen, comentario) {
+      this.id = id;
       this.nombre = nombre;
       this.tipo = tipo;
       this.residencia = residencia;
@@ -8,6 +9,11 @@ class Sospechoso {
       this.imagen = imagen;
       this.comentario = comentario;
     }
+
+
+get id(){
+  return this._id;
+}
 
 // Getters
 get nombre() {
@@ -66,6 +72,8 @@ get nombre() {
   set comentario(newComentario) {
     this._comentario = newComentario;
   }
-
+  set id(id) {
+    this._id = id;
+  }
 
   }

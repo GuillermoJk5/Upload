@@ -15,6 +15,7 @@
   <button onclick="ira('Principal.html')">Volver</button>
   
   <form id="sospechosoForm">
+    <input type="hidden" disabled id="id" value="0">
     <label for="nombreInput">Nombre:</label>
     <input type="text" id="nombreInput" required><br><br>
 
@@ -62,40 +63,57 @@
       document.getElementById('tipoCargado').addEventListener('click', mostrarFechaDescarga);
       document.getElementById('tipoVivo').addEventListener('click', ocultarFechaDescarga);
     });
+  
+    const urlParams = new URLSearchParams(window.location.search);
+    const sujetoJSON = urlParams.get('sujeto');
+    const sujeto = JSON.parse(decodeURIComponent(sujetoJSON));
 
-    function mostrarFechaDescarga() {
-      const fechaDescargaLabel = document.getElementById('fechaDescargaLabel');
-      const fechaDescargaInput = document.getElementById('fechaDescargaInput');
-   
-      fechaDescargaLabel.style.display = 'block';
-      fechaDescargaInput.style.display = 'block';
+    if(sujeto!=null){
+  
+    document.getElementById('id').value = sujeto._id;
+    document.getElementById('nombreInput').value = sujeto._nombre;
+    document.getElementById('residenciaInput').value = sujeto._residencia;
+    document.getElementById('culpabilidadInput').value = sujeto._culpabilidad;
+    document.getElementById('imagenInput').value = sujeto._imagen;
+    document.getElementById('comentarioInput').value = sujeto._comentario;
+  
+    fecha = sujeto._fecha;
+    if (fecha != null) {
+      mostrarFechaDescarga();
+      document.getElementById('fechaDescargaInput').value = fecha;
     }
-   
+  
+    if (sujeto._tipo == 'Cargado') {
+      document.getElementById('tipoCargado').checked = true;
+    } else {
+      document.getElementById('tipoVivo').checked = true;
+    }
+  }
+  
     function ocultarFechaDescarga() {
       const fechaDescargaLabel = document.getElementById('fechaDescargaLabel');
       const fechaDescargaInput = document.getElementById('fechaDescargaInput');
-   
       fechaDescargaLabel.style.display = 'none';
       fechaDescargaInput.style.display = 'none';
     }
-
+  
     document.getElementById('sospechosoForm').addEventListener('submit', function(event) {
       event.preventDefault();
-
       const fechaDescarga = document.getElementById('fechaDescargaInput').value;
-
+  
       if (validarFechaCampo()) {
+        const id = document.getElementById('id').value;
         const nombre = document.getElementById('nombreInput').value;
         const tipoCargadoChecked = document.getElementById('tipoCargado').checked;
         const residencia = document.getElementById('residenciaInput').value;
         const culpabilidad = document.getElementById('culpabilidadInput').value;
         const imagen = document.getElementById('imagenInput').value;
         const comentario = document.getElementById('comentarioInput').value;
-
+  
         let tipo = tipoCargadoChecked ? 'Cargado' : 'Vivo';
-
-        const nuevoSospechoso = new Sospechoso(nombre, tipo, residencia, fechaDescarga, culpabilidad, imagen, comentario);
-
+  
+        const nuevoSospechoso = new Sospechoso(id, nombre, tipo, residencia, fechaDescarga, culpabilidad, imagen, comentario);
+  
         anadirSospechoso(nuevoSospechoso);
         limpiarCampos();
       } else {
@@ -127,14 +145,29 @@
       if (listaSospechososJSON) {
         listaSospechosos = JSON.parse(listaSospechososJSON);
       }
-
-      listaSospechosos.push(nuevoSospechoso);
-      console.log(listaSospechosos);
-
+  
+      if (nuevoSospechoso._id > 0) {
+        listaSospechosos.forEach(sospechoso => {
+          if (sospechoso._id == nuevoSospechoso._id) {
+            sospechoso = nuevoSospechoso;
+          }
+        });
+      } else {
+        listaSospechosos.push(nuevoSospechoso);
+        console.log("La puta lista"+listaSospechosos);
+      }
+  
       const nuevaListaSospechososJSON = JSON.stringify(listaSospechosos);
       localStorage.setItem('sospechosos', nuevaListaSospechososJSON);
     }
-
+  
+    function mostrarFechaDescarga() {
+      const fechaDescargaLabel = document.getElementById('fechaDescargaLabel');
+      const fechaDescargaInput = document.getElementById('fechaDescargaInput');
+      fechaDescargaLabel.style.display = 'block';
+      fechaDescargaInput.style.display = 'block';
+    }
+  
     function limpiarCampos() {
       document.getElementById('nombreInput').value = '';
       document.getElementById('tipoCargado').checked = false;
@@ -144,9 +177,12 @@
       document.getElementById('culpabilidadInput').selectedIndex = 0;
       document.getElementById('imagenInput').value = '';
       document.getElementById('comentarioInput').value = '';
+      ira("Principal.html");
     }
+  
   </script>
   <script src="../Controladores/principal.js"></script>
+  
 </body>
 </html>
 
