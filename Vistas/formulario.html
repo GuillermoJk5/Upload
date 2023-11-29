@@ -57,6 +57,7 @@
 
   <script src="../Modelos/Sospechoso.js"></script>
   <script src="../Controladores/funciones.js"></script>
+  <script src="../Controladores/formulario.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       document.getElementById('tipoCargado').addEventListener('click', mostrarFechaDescarga);
@@ -66,7 +67,8 @@
     const urlParams = new URLSearchParams(window.location.search);
     const sujetoJSON = urlParams.get('sujeto');
     const sujeto = JSON.parse(decodeURIComponent(sujetoJSON));
-    console.log(sujeto);
+   
+
     if(sujeto!=null){
   
     document.getElementById('id').value = sujeto._id;
@@ -76,19 +78,18 @@
     document.getElementById('imagenInput').value = sujeto._imagen;
     document.getElementById('comentarioInput').value = sujeto._comentario;
   
-    fecha = sujeto._fecha;
-    if (fecha != null) {
-      mostrarFechaDescarga();
-      document.getElementById('fechaDescargaInput').value = fecha;
-    }
+   
   
     if (sujeto._tipo == 'Cargado') {
+      mostrarFechaDescarga();
+      
+      document.getElementById('fechaDescargaInput').value = sujeto._fechadescarga;
       document.getElementById('tipoCargado').checked = true;
     } else {
       document.getElementById('tipoVivo').checked = true;
     }
   }
-  
+    
     function ocultarFechaDescarga() {
       const fechaDescargaLabel = document.getElementById('fechaDescargaLabel');
       const fechaDescargaInput = document.getElementById('fechaDescargaInput');
@@ -100,8 +101,10 @@
       event.preventDefault();
       const fechaDescarga = document.getElementById('fechaDescargaInput').value;
   
-      if (validarFechaCampo()) {
-        const id = document.getElementById('id').value;
+      if (validarFechaCampo(fechaDescarga)) {
+        id = document.getElementById('id').value;
+        id = Number(id);
+        console.log(id);
         const nombre = document.getElementById('nombreInput').value;
         const tipoCargadoChecked = document.getElementById('tipoCargado').checked;
         const residencia = document.getElementById('residenciaInput').value;
@@ -114,64 +117,16 @@
         const nuevoSospechoso = new Sospechoso(id, nombre, tipo, residencia, fechaDescarga, culpabilidad, imagen, comentario);
         console.log(nuevoSospechoso);
         anadirSospechoso(nuevoSospechoso);
-        limpiarCampos();
+        ira("Principal.html");
       } else {
         alert("Error en la fecha");
       }
     });
   
-    function validarFechaCampo() {
-      const fecha = 'fechaDescargaInput';
+    
+    
   
-      if (!fecha || fecha === '') {
-        return true;
-      } else {
-        const fechaCampo = new Date(document.getElementById(fecha).value);
-        const fechaActual = new Date();
-  
-        if (fechaCampo > fechaActual) {
-          return false;
-        } else {
-          return true;
-        }
-      }
-    }
-  
-    function anadirSospechoso(nuevoSospechoso) {
-      let listaSospechosos = [];
-  
-      const listaSospechososJSON = localStorage.getItem('sospechosos');
-      if (listaSospechososJSON) {
-        listaSospechosos = JSON.parse(listaSospechososJSON);
-      }
-  
-      if (nuevoSospechoso._id > 0) {
-        console.log(nuevoSospechoso._id);
-        
-        listaSospechosos.forEach(sospechoso => 
-        {console.log(sospechoso._id);
-          if (sospechoso._id == nuevoSospechoso._id) {
-           
-            listaSospechosos[nuevoSospechoso._id] = nuevoSospechoso;
-           
-          }
-
-        });
-      } else {
-
-        numero = listaSospechosos.length;
-        console.log(listaSospechosos);
-        console.log(numero);
-        nuevoSospechoso._id = numero +1;
-
-        listaSospechosos.push(nuevoSospechoso);
-        console.log(nuevoSospechoso);
-      }
-  
-      const nuevaListaSospechososJSON = JSON.stringify(listaSospechosos);
-      localStorage.clear();
-      localStorage.setItem('sospechosos', nuevaListaSospechososJSON);
-    }
+    
   
     function mostrarFechaDescarga() {
       const fechaDescargaLabel = document.getElementById('fechaDescargaLabel');
@@ -180,17 +135,7 @@
       fechaDescargaInput.style.display = 'block';
     }
   
-    function limpiarCampos() {
-      document.getElementById('nombreInput').value = '';
-      document.getElementById('tipoCargado').checked = false;
-      document.getElementById('tipoVivo').checked = false;
-      document.getElementById('residenciaInput').value = '';
-      document.getElementById('fechaDescargaInput').value = '';
-      document.getElementById('culpabilidadInput').selectedIndex = 0;
-      document.getElementById('imagenInput').value = '';
-      document.getElementById('comentarioInput').value = '';
-      // ira("Principal.html");
-    }
+ 
   
   </script>
   <script src="../Controladores/principal.js"></script>

@@ -27,6 +27,7 @@ margin-left: 90px;
 font-size: 24px;
 font-family:Impact, 'Haettenschweiler', 'Arial Narrow Bold', sans-serif;
 color: red;
+pointer-events: none;
 }
 
 .sujeto-imagen {
