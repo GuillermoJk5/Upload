@@ -40,3 +40,17 @@ function validarFechaCampo(fechaDescarga) {
     const nuevaListaSospechososJSON = JSON.stringify(listaSospechosos);
     localStorage.setItem('sospechosos', nuevaListaSospechososJSON);
   }
+
+  function ocultarFechaDescarga() {
+    const fechaDescargaLabel = document.getElementById('fechaDescargaLabel');
+    const fechaDescargaInput = document.getElementById('fechaDescargaInput');
+    fechaDescargaLabel.style.display = 'none';
+    fechaDescargaInput.style.display = 'none';
+  }
+
+  function mostrarFechaDescarga() {
+    const fechaDescargaLabel = document.getElementById('fechaDescargaLabel');
+    const fechaDescargaInput = document.getElementById('fechaDescargaInput');
+    fechaDescargaLabel.style.display = 'block';
+    fechaDescargaInput.style.display = 'block';
+  }
