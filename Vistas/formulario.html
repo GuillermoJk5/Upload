@@ -66,7 +66,7 @@
     const urlParams = new URLSearchParams(window.location.search);
     const sujetoJSON = urlParams.get('sujeto');
     const sujeto = JSON.parse(decodeURIComponent(sujetoJSON));
-console.log(sujeto);
+    console.log(sujeto);
     if(sujeto!=null){
   
     document.getElementById('id').value = sujeto._id;
@@ -146,10 +146,16 @@ console.log(sujeto);
       }
   
       if (nuevoSospechoso._id > 0) {
-        listaSospechosos.forEach(sospechoso => {
+        console.log(nuevoSospechoso._id);
+        
+        listaSospechosos.forEach(sospechoso => 
+        {console.log(sospechoso._id);
           if (sospechoso._id == nuevoSospechoso._id) {
-            sospechoso = nuevoSospechoso;
+           
+            listaSospechosos[nuevoSospechoso._id] = nuevoSospechoso;
+           
           }
+
         });
       } else {
 
@@ -163,6 +169,7 @@ console.log(sujeto);
       }
   
       const nuevaListaSospechososJSON = JSON.stringify(listaSospechosos);
+      localStorage.clear();
       localStorage.setItem('sospechosos', nuevaListaSospechososJSON);
     }
   
